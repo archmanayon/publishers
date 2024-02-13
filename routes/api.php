@@ -19,8 +19,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('publishing', function () {
-    return Publishing::all();
+Route::get('publishing/{id?}', function ($id = NULL) {
+    // return Publishing::all();
+    return is_null($id) ? Publishing::all() : Publishing::find($id);
 });
 
 Route::post('xls', function (Request $request) {
