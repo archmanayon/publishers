@@ -11,18 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pulishings', function (Blueprint $table) {
+        Schema::create('publishings', function (Blueprint $table) {
             $table->id();
             $table->integer('publisher_number')->nullable();
-            $table->string('publisher_name',30)->nullable();
-            $table->string('isbn', 13)->nullable();
-            $table->string('sku', 13)->nullable();
-            $table->string('parent_isbn', 13)->nullable();
-            $table->string('title',30)->nullable();
-            $table->string('author',30)->nullable();
+            $table->string('publisher_name')->nullable();
+            $table->string('isbn')->nullable();
+            $table->string('sku')->nullable();
+            $table->string('parent_isbn')->nullable();
+            $table->string('title')->nullable();
+            $table->string('author')->nullable();
             $table->integer('page_count')->nullable();
-            $table->string('binding_type',30)->nullable();
-            $table->string('book_type_id',30)->nullable();
+            $table->string('binding_type')->nullable();
+            $table->text('book_type_id')->nullable();
             $table->decimal('list_price', 10, 2)->nullable();
             $table->decimal('wholesale_discount_%', 5, 2)->nullable();
             $table->decimal('MTD_Quantity', 10, 2)->nullable();
@@ -52,8 +52,8 @@ return new class extends Migration
             $table->decimal('YTD_extended_recovery', 10, 2)->nullable();
             $table->decimal('YTD_pub_comp', 10, 2)->nullable();
             $table->decimal('deferral_balance', 10, 2)->nullable();
-            $table->string('reporting_currency_code',30)->nullable();
-            $table->date('period_name')->nullable();
+            $table->string('reporting_currency_code')->nullable();
+            $table->string('period_name')->nullable();
             $table->decimal('original_deferral_amount', 10, 2)->nullable();
             $table->decimal('MTD_return_quantity', 10, 2)->nullable();
             $table->decimal('MTD_return_wholesale', 10, 2)->nullable();
@@ -69,27 +69,27 @@ return new class extends Migration
             $table->decimal('YTD_net_quantity', 10, 2)->nullable();
             $table->decimal('YTD_net_wholesale', 10, 2)->nullable();
             $table->decimal('YTD_net_pub_comp', 10, 2)->nullable();
-            $table->string('returns_flag_value',30)->nullable();
-            $table->date('nonreturnable_date')->nullable();
-            $table->string('title_status_flag_value',30)->nullable();
-            $table->date('cancelled_date')->nullable();
-            $table->string('publisher_imprint',30)->nullable();
-            $table->string('customer_flexfield1',30)->nullable();
-            $table->string('customer_flexfield2',30)->nullable();
-            $table->string('customer_flexfield3',30)->nullable();
-            $table->string('customer_flexfield4',30)->nullable();
-            $table->string('customer_flexfield5',30)->nullable();
-            $table->string('isbn_13', 13)->nullable();
+            $table->string('returns_flag_value')->nullable();
+            $table->string('nonreturnable_date')->nullable();
+            $table->string('title_status_flag_value')->nullable();
+            $table->string('cancelled_date')->nullable();
+            $table->string('publisher_imprint')->nullable();
+            $table->string('customer_flexfield1')->nullable();
+            $table->string('customer_flexfield2')->nullable();
+            $table->string('customer_flexfield3')->nullable();
+            $table->string('customer_flexfield4')->nullable();
+            $table->string('customer_flexfield5')->nullable();
+            $table->string('isbn_13')->nullable();
             $table->decimal('MTD_wholesale_tax', 10, 2)->nullable();
             $table->decimal('MTD_print_charge_tax', 10, 2)->nullable();
             $table->decimal('MTD_return_wholesale_tax', 10, 2)->nullable();
-            $table->string('MTD_return_charge_tax',30)->nullable();
+            $table->string('MTD_return_charge_tax')->nullable();
             $table->decimal('YTD_wholesale_tax', 10, 2)->nullable();
             $table->decimal('YTD_print_charge_tax', 10, 2)->nullable();
             $table->decimal('YTD_return_wholesale_tax', 10, 2)->nullable();
-            $table->string('YTD_return_charge_tax',30)->nullable();
-            $table->string('market',30)->nullable();
-            $table->string('sales_category',30)->nullable();
+            $table->string('YTD_return_charge_tax')->nullable();
+            $table->string('market')->nullable();
+            $table->string('sales_category')->nullable();
             $table->decimal('Mtd_global_distribution_fee', 10, 2)->nullable();
             $table->decimal('Mtd_global_distribution_fee_tax', 10, 2)->nullable();
             $table->decimal('Ytd_global_distribution_fee', 10, 2)->nullable();
@@ -103,6 +103,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pulishings');
+        Schema::dropIfExists('publishings');
     }
 };

@@ -1,7 +1,7 @@
 <?php
 
 namespace Database\Seeders;
-use App\Models\Pulishing;
+use App\Models\Publishing;
 use App\Models\User;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {                
         // \App\Models\User::factory(10)->create();
-        \App\Models\Pulishing::factory(10)->create();
+        \App\Models\Publishing::factory(10)->create();
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',

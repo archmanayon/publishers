@@ -8,9 +8,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Pulishing>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Publishing>
  */
-class PulishingFactory extends Factory
+class PublishingFactory extends Factory
 {
     /**
      * Define the model's default state.
