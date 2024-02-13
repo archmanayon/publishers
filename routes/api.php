@@ -24,15 +24,23 @@ Route::get('publishing', function () {
 });
 
 Route::post('xls', function (Request $request) {
-    // logger([$request->all()[0]]);
-    $row_one = $request->all()[0];
-    $record = [];
-    foreach($row_one as $key => $value){
-        $record[$key] = $value;
-    }
-    Publishing::create($record);
-    logger($record);
-    return $record;
+    $all_rows = $request->all();
+    collect($all_rows)->map(function ($obj_){
+        $per_row = [];
+        foreach( $obj_ as $key => $value){
+            $per_row[$key] = $value;
+        };
+        Publishing::create($per_row);
+        logger($per_row);
+    });
+    // $row_one = $request->all()[0];
+    // $record = [];
+    // foreach($row_one as $key => $value){
+    //     $record[$key] = $value;
+    // }
+    // Publishing::create($record);
+    // logger($record);
+    // return $record;
 });
 
 
