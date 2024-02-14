@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\PublishingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\Publishing;
@@ -19,30 +21,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('publishing/{id?}', function ($id = NULL) {
-    // return Publishing::all();
-    return is_null($id) ? Publishing::all() : Publishing::find($id);
-});
-
-Route::post('xls', function (Request $request) {
-    $all_rows = $request->all();
-    collect($all_rows)->map(function ($obj_){
-        $per_row = [];
-        foreach( $obj_ as $key => $value){
-            $per_row[$key] = $value;
-        };
-        Publishing::create($per_row);
-        logger($per_row);
-    });
-    // $row_one = $request->all()[0];
-    // $record = [];
-    // foreach($row_one as $key => $value){
-    //     $record[$key] = $value;
-    // }
-    // Publishing::create($record);
-    // logger($record);
-    // return $record;
-});
-
-
-
+Route::apiResource('publishing', PublishingController::class);
