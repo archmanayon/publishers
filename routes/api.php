@@ -22,3 +22,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('publishing', PublishingController::class);
+
+Route::get('isbn/{id:isbn}', [
+    function (Publishing $id) {
+        return $id;
+    }
+]);

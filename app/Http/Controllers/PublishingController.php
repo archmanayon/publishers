@@ -44,7 +44,7 @@ class PublishingController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id = NULL)
+    public function show(string $id)
     {
         // return is_null($id) ? Publishing::all() : Publishing::find($id);
         return Publishing::find($id);
