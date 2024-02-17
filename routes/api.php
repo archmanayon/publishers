@@ -22,6 +22,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 });
 
 Route::get('publishing', [PublishingController::class, 'index']);
+Route::get('publishing/{id}', [PublishingController::class, 'show']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
