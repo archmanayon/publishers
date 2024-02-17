@@ -17,11 +17,18 @@ use App\Models\Publishing;
 |
 */
 
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::apiResource('publishing', PublishingController::class)->except(['index', 'show']);
+});
+
+Route::get('publishing', [PublishingController::class, 'index']);
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('publishing', PublishingController::class);
+
+
 
 Route::get('isbn/{id:isbn}', [
     function (Publishing $id) {
