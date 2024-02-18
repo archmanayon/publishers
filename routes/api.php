@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\PublishingController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\Publishing;
@@ -23,6 +24,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
 Route::get('publishing', [PublishingController::class, 'index']);
 Route::get('publishing/{id}', [PublishingController::class, 'show']);
+Route::post('login', [UserController::class, 'update']);
+Route::post('register', [UserController::class, 'store']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
