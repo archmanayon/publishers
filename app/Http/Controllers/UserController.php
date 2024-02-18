@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 
@@ -27,8 +27,7 @@ class UserController extends Controller
         $fields = $request->validate([
             'name' => 'required|string',
             'email' => 'required|unique:users,email',
-            'password' => 'required|string'
-
+            'password' => 'required|string|confirmed',
 
         ]);
 
@@ -38,7 +37,15 @@ class UserController extends Controller
             'password' => bcrypt($fields['password']),
         ]);
 
-        return $user;
+        $token = $user->createToken('registerToken')->plainTextToken;
+
+        $response = [
+            'user' => $user,
+            'token' => $token
+        ];
+
+
+        return response($response, 201);
     }
 
     /**
@@ -63,5 +70,12 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    // remove token on logout
+    public function destroyToken(Request $request)
+    {
+
+        auth()->user()->tokens()->delete();
     }
 }
