@@ -25,16 +25,13 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
 Route::get('publishing', [PublishingController::class, 'index']);
 Route::get('publishing/{id}', [PublishingController::class, 'show']);
-Route::post('login', [UserController::class, 'update']);
+Route::post('login', [UserController::class, 'login']);
 Route::post('register', [UserController::class, 'store']);
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-
-
-
 
 Route::get('isbn/{id:isbn}', [
     function (Publishing $id) {
