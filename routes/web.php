@@ -1,7 +1,9 @@
 <?php
 
+use App\Mail\MyEmail;
 use Illuminate\Support\Facades\Route;
 use App\Models\Publishing;
+use Illuminate\Support\Facades\Mail;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,3 +24,8 @@ Route::get('/publishing', function () {
     return Publishing::all();
 });
 
+Route::get('/send', function () {
+
+    $sending = Mail::to('montontami112@gmail.com')->send(new MyEmail(['name' => 'Monton', 'email' => '<montontami112@gmail.com>']));
+    return $sending ? "success" : "error";
+});
