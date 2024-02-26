@@ -27,12 +27,7 @@ Route::get('/publishing', function () {
 Route::get('/send', function () {
 
     $sending = Mail::to('montontami112@gmail.com')
-        ->send(new MyEmail(
-            [
-                'name' => 'Monton',
-                'email' => '<montontami112@gmail.com>'
-            ]
-        ));
+        ->send(new MyEmail('bitin'));
 
     return $sending ? "success" : "error";
 });

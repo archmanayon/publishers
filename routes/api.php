@@ -19,18 +19,18 @@ use App\Models\Publishing;
 */
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
-    Route::apiResource('publishing', PublishingController::class)->except(['index', 'show']);
+    Route::apiResource('publishing', PublishingController::class)->except(['update', 'destroy']);
     Route::post('logout', [UserController::class, 'destroyToken']);
 });
 
-Route::get('publishing', [PublishingController::class, 'index']);
-Route::get('publishing/{id}', [PublishingController::class, 'show']);
+// Route::get('publishing', [PublishingController::class, 'index']);
+// Route::get('publishing/{id}', [PublishingController::class, 'show']);
 Route::post('login', [UserController::class, 'login']);
-Route::post('register', [UserController::class, 'store']);
+Route::post('register', [UserController::class, 'create']);
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+    return $request->user()->all();
 });
 
 Route::get('isbn/{id:isbn}', [

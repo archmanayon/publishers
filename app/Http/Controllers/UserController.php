@@ -20,9 +20,9 @@ class UserController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Show the form for creating a new resource.
      */
-    public function store(Request $request)
+    public function create(Request $request)
     {
         $fields = $request->validate([
             'name' => 'required|string',
@@ -45,8 +45,25 @@ class UserController extends Controller
         ];
 
 
-        return response($response, 201);
+        return response([
+            'message' => 'Successfully created user',
+            'data' => $response
+        ], 201);
     }
+
+
+    /**
+     * Store a newly created resource in storage.
+     */
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        // 
+    }
+
 
     /**
      * Display the specified resource.
@@ -77,7 +94,7 @@ class UserController extends Controller
     {
         $fields = $request->validate([
 
-            'email' => 'required|',
+            'email' => 'required',
             'password' => 'required',
 
         ]);
@@ -107,6 +124,9 @@ class UserController extends Controller
     {
         // Revoke the current user's token
         $request->user()->currentAccessToken()->delete();
+        return response([
+            "message" => "Successfully logged out",
+        ]);
 
         // completely destroy token from db
         // auth()->user()->tokens()->delete();

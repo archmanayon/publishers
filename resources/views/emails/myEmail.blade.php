@@ -10,7 +10,7 @@
 </head>
 
 <body class="antialiased">
-    from Archie laravel
+    hello <p>{{$data}}</p>
 </body>
 
 </html>

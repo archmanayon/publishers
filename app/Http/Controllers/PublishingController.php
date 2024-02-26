@@ -21,18 +21,6 @@ class PublishingController extends Controller
         return Publishing::all();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $all_rows = $request->all();
@@ -45,6 +33,11 @@ class PublishingController extends Controller
             Publishing::create($per_row);
             logger($per_row);
         });
+
+        $request->user()->currentAccessToken()->delete();
+        return response([
+            "message" => "Successfully saved to database"
+        ], 200);
     }
 
     /**
