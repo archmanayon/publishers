@@ -6,7 +6,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\Publishing;
-use Spatie\QueryBuilder\QueryBuilder;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -22,13 +22,9 @@ use Spatie\QueryBuilder\QueryBuilder;
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::apiResource('publishing', PublishingController::class)->except(['update', 'destroy']);
     Route::post('logout', [UserController::class, 'destroyToken']);
-    Route::post('authors', function (Request $request) {
-        $author = QueryBuilder::for(Publishing::class)
-            ->allowedFilters(['author'])
-            ->get();
-        return $author;
-        // return response()->json([$author], 200);
-    });
+
+    // filter according to chosen field
+    Route::post('fields', [PublishingController::class, 'chooseFilter']);
 });
 
 // Route::get('publishing', [PublishingController::class, 'index']);

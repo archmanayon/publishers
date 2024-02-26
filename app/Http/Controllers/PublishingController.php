@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Publishing;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class PublishingController extends Controller
 {
@@ -47,6 +48,19 @@ class PublishingController extends Controller
     {
         // return is_null($id) ? Publishing::all() : Publishing::find($id);
         return Publishing::find($id);
+    }
+
+    public function chooseFilter(Request $request)
+    {
+        $author = QueryBuilder::for(Publishing::class)
+            // ->allowedFilters(['author'])
+            // testing with desired field
+            ->allowedFilters(array_keys($request->filter)[0])
+            ->get();
+        return response($author);
+        // return response()->json([$author], 200);
+
+        // return response()->json(array_keys($request->filter), 200);
     }
 
     /**
