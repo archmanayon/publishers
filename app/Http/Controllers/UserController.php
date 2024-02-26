@@ -51,6 +51,47 @@ class UserController extends Controller
         ], 201);
     }
 
+    // login
+    public function login(Request $request)
+    {
+        $fields = $request->validate([
+
+            'email' => 'required',
+            'password' => 'required',
+
+        ]);
+
+        $user = User::where('email', $fields['email'])->first();
+
+
+        if (!$user || !Hash::check($fields['password'], $user->password)) {
+            return response([
+                "message" => "Wrong Credentials"
+            ], 401);
+        }
+
+        $token = $user->createToken('registerToken')->plainTextToken;
+
+        $response = [
+            'user' => $user,
+            'token' => $token
+        ];
+
+        return response($response, 201);
+    }
+
+    // remove token on logout
+    public function destroyToken(Request $request)
+    {
+        // Revoke the current user's token
+        $request->user()->currentAccessToken()->delete();
+        return response()->json([
+            "message" => "Successfully logged out",
+        ], 200);
+
+        // to completely destroy token from db
+        // auth()->user()->tokens()->delete();
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -87,48 +128,5 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         //
-    }
-
-    // login
-    public function login(Request $request)
-    {
-        $fields = $request->validate([
-
-            'email' => 'required',
-            'password' => 'required',
-
-        ]);
-
-        $user = User::where('email', $fields['email'])->first();
-
-
-        if (!$user || !Hash::check($fields['password'], $user->password)) {
-            return response([
-                "message" => "Wrong Credentials"
-            ], 401);
-        }
-
-        $token = $user->createToken('registerToken')->plainTextToken;
-
-        $response = [
-            'user' => $user,
-            'token' => $token
-        ];
-
-
-        return response($response, 201);
-    }
-
-    // remove token on logout
-    public function destroyToken(Request $request)
-    {
-        // Revoke the current user's token
-        $request->user()->currentAccessToken()->delete();
-        return response([
-            "message" => "Successfully logged out",
-        ]);
-
-        // completely destroy token from db
-        // auth()->user()->tokens()->delete();
     }
 }
