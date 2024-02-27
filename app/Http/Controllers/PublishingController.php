@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Publishing;
 use Illuminate\Http\Request;
 use PhpParser\Node\Expr\Cast\Array_;
+use Spatie\QueryBuilder\Filters\Filter;
+
 use Spatie\QueryBuilder\QueryBuilder;
 
 class PublishingController extends Controller
@@ -18,9 +20,23 @@ class PublishingController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Publishing::all();
+        // logger(array_keys($request->filter));
+
+        $sortByColumn = preg_replace('/[^a-zA-Z0-9]+/', '', $request->sort);
+
+        $result = QueryBuilder::for(Publishing::class)
+
+            ->allowedFilters([
+                "publisher_name"
+            ])
+            // sorting with desired field
+            ->allowedSorts($sortByColumn)
+            ->get();
+
+        // return response($result);
+        return response()->json([$result], 200);
     }
 
     public function store(Request $request)
