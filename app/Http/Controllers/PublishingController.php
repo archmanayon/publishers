@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Publishing;
 use Illuminate\Http\Request;
+use PhpParser\Node\Expr\Cast\Array_;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class PublishingController extends Controller
@@ -52,15 +53,18 @@ class PublishingController extends Controller
 
     public function chooseFilter(Request $request)
     {
+        $sortByColumn = preg_replace('/[^a-zA-Z0-9]+/', '', $request->sort);
         $author = QueryBuilder::for(Publishing::class)
             // ->allowedFilters(['author'])
-            // testing with desired field
-            ->allowedFilters(array_keys($request->filter)[0])
-            ->get();
-        return response($author);
-        // return response()->json([$author], 200);
 
-        // return response()->json(array_keys($request->filter), 200);
+            // searching with desired field
+            ->allowedFilters(array_keys($request->filter)[0])
+
+            // sorting with desired field
+            ->allowedSorts($sortByColumn)
+            ->get();
+        // return response($author);
+        return response()->json([$author], 200);
     }
 
     /**
