@@ -24,7 +24,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('logout', [UserController::class, 'destroyToken']);
 
     // filter according to chosen field
-    Route::post('fields', [PublishingController::class, 'chooseFilter']);
+    Route::get('fields', [PublishingController::class, 'chooseFilter']);
 });
 
 // Route::get('publishing', [PublishingController::class, 'index']);

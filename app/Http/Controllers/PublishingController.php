@@ -23,7 +23,7 @@ class PublishingController extends Controller
      */
     public function index(Request $request)
     {
-        $sortByColumn = preg_replace('/[^a-zA-Z0-9]+/', '', $request->sort);
+        $sortByColumn = preg_replace("/-/", '', $request->sort);
 
         $columns = Schema::getColumnListing((new Publishing())->getTable());
 
@@ -48,7 +48,7 @@ class PublishingController extends Controller
             // })
 
             // sorting with desired field
-            ->allowedSorts($sortByColumn)
+            ->allowedSorts([$sortByColumn])
             ->get();
 
         // return response($result);
@@ -85,15 +85,15 @@ class PublishingController extends Controller
 
     public function chooseFilter(Request $request)
     {
-        $sortByColumn = preg_replace('/[^a-zA-Z0-9]+/', '', $request->sort);
+        $sortByColumn = preg_replace("/-/", '', $request->sort);
         $author = QueryBuilder::for(Publishing::class)
             // ->allowedFilters(['author'])
 
             // searching with desired field
-            ->allowedFilters(array_keys($request->filter)[0])
+            ->allowedFilters(array_keys($request->filter))
 
             // sorting with desired field
-            ->allowedSorts($sortByColumn)
+            ->allowedSorts([$sortByColumn])
             ->get();
         // return response($author);
         return response()->json([$author], 200);
