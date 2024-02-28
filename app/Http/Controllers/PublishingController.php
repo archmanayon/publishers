@@ -28,7 +28,7 @@ class PublishingController extends Controller
         $columns = Schema::getColumnListing((new Publishing())->getTable());
 
         $result = QueryBuilder::for(Publishing::class)
-            ->allowedFilters([])
+            ->allowedFilters(['id'])
 
             // filther through ALL columns
             ->where(function ($query) use ($request, $columns) {
@@ -52,8 +52,8 @@ class PublishingController extends Controller
             ->get();
 
         // return response($result);
-        return response()->json([$result], 200);
-        // logger($request->search);
+        return response()->json([$result, $request->search], 200);
+        logger($request->search);
     }
 
     public function store(Request $request)
