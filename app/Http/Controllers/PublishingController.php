@@ -6,9 +6,12 @@ use App\Models\Publishing;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
 use PhpParser\Node\Expr\Cast\Array_;
+use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\Filters\Filter;
 
 use Spatie\QueryBuilder\QueryBuilder;
+
+use function Laravel\Prompts\search;
 
 class PublishingController extends Controller
 {
@@ -28,16 +31,21 @@ class PublishingController extends Controller
         $columns = Schema::getColumnListing((new Publishing())->getTable());
 
         $result = QueryBuilder::for(Publishing::class)
-            ->allowedFilters(['id', "YTD_avg_discount_%"])
 
-            // filther through ALL columns
-            ->where(function ($query) use ($request, $columns) {
-                foreach ($columns as $column) {
-                    $query->orWhere($column, 'like', "%$request->search%");
-                }
-            })
+            // ---- 01 ---- using help of scopeFilter with AlllowedFilter::class from model
+            ->allowedFilters(['id', "YTD_avg_discount_%", AllowedFilter::scope('search')])
 
-            // filther through selected columns
+            // ---- 02 ---- using help of scopeFilter from model
+            // ->search($request, $columns)
+
+            // ---- 03 ---- filther through ALL columns
+            // ->where(function ($query) use ($request, $columns) {
+            //     foreach ($columns as $column) {
+            //         $query->orWhere($column, 'like', "%$request->search%");
+            //     }
+            // })
+
+            // ---- 04 ---- filther through selected columns
             // ->where(function ($query) use ($request) {
             //     $query->where('publisher_number', 'like', "%$request->search%")
             //         ->orWhere('publisher_name', 'like', "%$request->search%")
