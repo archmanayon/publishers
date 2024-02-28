@@ -38,14 +38,14 @@ class PublishingController extends Controller
             // ---- 02 ---- using help of scopeFilter from model
             // ->search($request, $columns)
 
-            // ---- 03 ---- filther through ALL columns
+            // ---- 03 ---- filter through ALL columns
             // ->where(function ($query) use ($request, $columns) {
             //     foreach ($columns as $column) {
             //         $query->orWhere($column, 'like', "%$request->search%");
             //     }
             // })
 
-            // ---- 04 ---- filther through selected columns
+            // ---- 04 ---- filter through selected columns
             // ->where(function ($query) use ($request) {
             //     $query->where('publisher_number', 'like', "%$request->search%")
             //         ->orWhere('publisher_name', 'like', "%$request->search%")
