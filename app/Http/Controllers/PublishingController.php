@@ -28,7 +28,7 @@ class PublishingController extends Controller
         $columns = Schema::getColumnListing((new Publishing())->getTable());
 
         $result = QueryBuilder::for(Publishing::class)
-            ->allowedFilters(['id'])
+            ->allowedFilters(['id', "YTD_avg_discount_%"])
 
             // filther through ALL columns
             ->where(function ($query) use ($request, $columns) {
@@ -86,8 +86,8 @@ class PublishingController extends Controller
     public function chooseFilter(Request $request)
     {
         $sortByColumn = preg_replace("/-/", '', $request->sort);
-        $author = QueryBuilder::for(Publishing::class)
-            // ->allowedFilters(['author'])
+        $result = QueryBuilder::for(Publishing::class)
+            // ->allowedFilters(['result'])
 
             // searching with desired field
             ->allowedFilters(array_keys($request->filter))
@@ -95,8 +95,8 @@ class PublishingController extends Controller
             // sorting with desired field
             ->allowedSorts([$sortByColumn])
             ->get();
-        // return response($author);
-        return response()->json([$author], 200);
+        // return response($result);
+        return response()->json([$result], 200);
     }
 
     /**
