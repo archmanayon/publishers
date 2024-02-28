@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Publishing;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Schema;
 use PhpParser\Node\Expr\Cast\Array_;
 use Spatie\QueryBuilder\Filters\Filter;
 
@@ -22,20 +23,30 @@ class PublishingController extends Controller
      */
     public function index(Request $request)
     {
-        // logger(array_keys($request->filter));
-
         $sortByColumn = preg_replace('/[^a-zA-Z0-9]+/', '', $request->sort);
+
+        $columns = Schema::getColumnListing((new Publishing())->getTable());
 
         $result = QueryBuilder::for(Publishing::class)
             ->allowedFilters([])
-            ->where(function ($query) use ($request) {
-                $query->where('publisher_number', 'like', "%$request->search%")
-                    ->orWhere('publisher_name', 'like', "%$request->search%")
-                    ->orWhere('isbn', 'like', "%$request->search%")
-                    ->orWhere('sku', 'like', "%$request->search%")
-                    ->orWhere('title', 'like', "%$request->search%")
-                    ->orWhere('author', 'like', "%$request->search%");
+
+            // filther through ALL columns
+            ->where(function ($query) use ($request, $columns) {
+                foreach ($columns as $column) {
+                    $query->orWhere($column, 'like', "%$request->search%");
+                }
             })
+
+            // filther through selected columns
+            // ->where(function ($query) use ($request) {
+            //     $query->where('publisher_number', 'like', "%$request->search%")
+            //         ->orWhere('publisher_name', 'like', "%$request->search%")
+            //         ->orWhere('isbn', 'like', "%$request->search%")
+            //         ->orWhere('sku', 'like', "%$request->search%")
+            //         ->orWhere('title', 'like', "%$request->search%")
+            //         ->orWhere('author', 'like', "%$request->search%");
+            // })
+
             // sorting with desired field
             ->allowedSorts($sortByColumn)
             ->get();
