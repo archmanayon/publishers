@@ -27,16 +27,22 @@ class PublishingController extends Controller
         $sortByColumn = preg_replace('/[^a-zA-Z0-9]+/', '', $request->sort);
 
         $result = QueryBuilder::for(Publishing::class)
-
-            ->allowedFilters([
-                "publisher_name"
-            ])
+            ->allowedFilters([])
+            ->where(function ($query) use ($request) {
+                $query->where('publisher_number', 'like', "%$request->search%")
+                    ->orWhere('publisher_name', 'like', "%$request->search%")
+                    ->orWhere('isbn', 'like', "%$request->search%")
+                    ->orWhere('sku', 'like', "%$request->search%")
+                    ->orWhere('title', 'like', "%$request->search%")
+                    ->orWhere('author', 'like', "%$request->search%");
+            })
             // sorting with desired field
             ->allowedSorts($sortByColumn)
             ->get();
 
         // return response($result);
         return response()->json([$result], 200);
+        // logger($request->search);
     }
 
     public function store(Request $request)
@@ -52,7 +58,6 @@ class PublishingController extends Controller
             logger($per_row);
         });
 
-        $request->user()->currentAccessToken()->delete();
         return response([
             "message" => "Successfully saved to database"
         ], 200);
