@@ -9,7 +9,7 @@ class Publishing extends Model
 {
     use HasFactory;
 
-    protected $guard = [];
+    protected $guarded = [];
 
     public function scopeSearch($query, $request, array $columns)
     {
