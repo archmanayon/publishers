@@ -25,12 +25,14 @@ class NotificationController extends Controller
         
         $users = User::all();
 
-        $sending = Notification::send($users, 
+        Notification::send($users, 
             new UploadNotification(
                 $users, 'second param ni ha, pwedelink ni'
                 )
         );
 
-        return $sending? "successfully sent to many users" : "error-not sent to many users";
+        return response([
+            "message" => "Successful Notification"
+        ], 200);
     }
 }

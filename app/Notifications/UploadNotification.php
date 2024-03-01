@@ -21,6 +21,7 @@ class UploadNotification extends Notification
     public function __construct($data, $secondParam)
     {
         $this->data = $data;
+        $this->secondParam = $secondParam;
     }
 
     /**
@@ -39,9 +40,10 @@ class UploadNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-                    ->line('first line: all from this data  =>  '. $this->data)
-                    ->action('2nd line: archies Notification Action', url('/'))
-                    ->line('3rd Line: lethma, Thank you for using our application!'. $this->secondParam);
+                    ->subject("for: ".$notifiable->name)
+                    ->line('first line: all from this data=  '.$notifiable->name)
+                    ->action('2nd line:'.$this->secondParam, url('/'))
+                    ->line('3rd Line: lethma');
     }
 
     /**
