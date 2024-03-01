@@ -91,22 +91,6 @@ class PublishingController extends Controller
         return Publishing::find($id);
     }
 
-    public function chooseFilter(Request $request)
-    {
-        $sortByColumn = preg_replace("/-/", '', $request->sort);
-        $result = QueryBuilder::for(Publishing::class)
-            // ->allowedFilters(['result'])
-
-            // searching with desired field
-            ->allowedFilters(array_keys($request->filter))
-
-            // sorting with desired field
-            ->allowedSorts([$sortByColumn])
-            ->get();
-        // return response($result);
-        return response()->json([$result], 200);
-    }
-
     /**
      * Show the form for editing the specified resource.
      */

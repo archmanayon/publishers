@@ -29,7 +29,7 @@ class MyEmail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: "Archie's Test Email",
+            subject: $this->data[0]['subject'],
         );
     }
 
@@ -40,7 +40,7 @@ class MyEmail extends Mailable
     {
         return new Content(
             view: 'emails.myEmail',
-            with: ['data' => $this->data],
+            with: ['datta' => "datta from MAIL.php"],
         );
     }
 

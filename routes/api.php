@@ -1,12 +1,14 @@
 <?php
 
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PublishingController;
 use App\Http\Controllers\UserController;
+use App\Mail\MyEmail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\Publishing;
-
+use Illuminate\Support\Facades\Mail;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,12 +25,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::apiResource('publishing', PublishingController::class)->except(['update', 'destroy']);
     Route::post('logout', [UserController::class, 'destroyToken']);
 
-    // filter according to chosen field
-    Route::get('fields', [PublishingController::class, 'chooseFilter']);
 });
 
-// Route::get('publishing', [PublishingController::class, 'index']);
-// Route::get('publishing/{id}', [PublishingController::class, 'show']);
 Route::post('login', [UserController::class, 'login']);
 Route::post('register', [UserController::class, 'create']);
 
@@ -42,3 +40,6 @@ Route::get('isbn/{id:isbn}', [
         return $id;
     }
 ]);
+
+Route::post('/send', [NotificationController::class,'send']);
+Route::post('/notify', [NotificationController::class,'notify']);

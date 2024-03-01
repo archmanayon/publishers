@@ -10,7 +10,9 @@
 </head>
 
 <body class="antialiased">
-    hello <p>{{$data}}</p>
+    <h> hello </h>
+    <!-- <p>{{$data[0]["name"]}}</p> -->
+    <p>{{ $datta }}</p>
 </body>
 
 </html>

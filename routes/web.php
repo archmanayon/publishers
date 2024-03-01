@@ -20,14 +20,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/publishing', function () {
-    return Publishing::all();
-});
+// Route::get('/publishing', function () {
+//     return Publishing::all();
+// });
 
-Route::get('/send', function () {
+// Route::get('/send', function () {
 
-    $sending = Mail::to('montontami112@gmail.com')
-        ->send(new MyEmail('bitin'));
+//     $sending = Mail::to('montontami112@gmail.com')
+//         ->send(new MyEmail('bitin'));
 
-    return $sending ? "success" : "error";
-});
+//     return $sending ? "success" : "error";
+// });
